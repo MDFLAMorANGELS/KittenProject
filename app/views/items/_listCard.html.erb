@@ -1,0 +1,14 @@
+<div id="<%= dom_id item %>">
+    <div class="card pb-3 mb-5 rounded-5 mx-3"  style="width: 23rem;">
+        <%=image_tag item.image_url,:class=>"w-100 rounded-top-5 list_img"%>
+        <div class="p-2 card-body d-flex flex-column align-items-around justify-content-between">
+        <h5 class="card-title text-center"><%= item.title %></h5>
+        <p class="card-text"> <%= item.description %></p>
+        <p class="card-text"> <%= item.price %></p>
+        <%= link_to "Show this item", item,:class=>"btn btn-outline-primary justify-content-center align-items-center" %>
+        </div>
+    </div>
+</div>
+
+
+
