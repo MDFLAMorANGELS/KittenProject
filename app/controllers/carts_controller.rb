@@ -50,14 +50,25 @@ class CartsController < ApplicationController
   end
 
   # DELETE /carts/1 or /carts/1.json
-  def destroy
-    @cart.destroy
+  # def destroy
+  #   @cart.destroy
 
-    respond_to do |format|
-      format.html { redirect_to carts_url, notice: "Cart was successfully destroyed." }
-      format.json { head :no_content }
+  #   respond_to do |format|
+  #     format.html { redirect_to carts_url, notice: "Cart was successfully destroyed." }
+  #     format.json { head :no_content }
+  #   end
+  # end
+
+  def destroy
+    Order.find_by(id: params[:id]).destroy
+    respond_to do |format| 
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('cart',
+          partial: 'carts/cart',
+        locals: {cart: @cart})   
+      end
     end
-  end
+  end  
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -92,14 +103,14 @@ class CartsController < ApplicationController
       end
     end
   
-    def remove
-      Order.find_by(id: params[:id]).destroy
-      respond_to do |format| 
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('cart',
-            partial: 'carts/cart',
-          locals: {cart: @cart})   
-        end
-      end
-    end  
+    # def remove
+    #   Order.find_by(id: params[:id]).destroy
+    #   respond_to do |format| 
+    #     format.turbo_stream do
+    #       render turbo_stream: turbo_stream.replace('cart',
+    #         partial: 'carts/cart',
+    #       locals: {cart: @cart})   
+    #     end
+    #   end
+    # end  
 end
