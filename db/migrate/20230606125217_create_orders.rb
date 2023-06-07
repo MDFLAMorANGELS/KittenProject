@@ -3,6 +3,7 @@ class CreateOrders < ActiveRecord::Migration[7.0]
     create_table :orders do |t|
       t.belongs_to :user, index: true
       t.belongs_to :item, index: true
+      t.integer :quantity
 
       t.timestamps
     end
